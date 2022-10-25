@@ -1,4 +1,5 @@
 const express = require("express")
+const {AgeFromDateString, AgeFromDate} = require("age-calculator")
 
 const app = express()
 app.use(express.urlencoded({extended: true}))
@@ -8,7 +9,9 @@ app.get("/", (req, res) => {
 })
 
 app.post("/", (req, res) => {
-    console.log(req.body);
+    let dob = req.body.dob;
+    let ageFromString = new AgeFromDateString(dob).age
+    res.send(`Your age is : ${ageFromString}`);
 })
 
 app.listen(6969, () => {
