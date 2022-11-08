@@ -1,7 +1,6 @@
 const express = require("express");
-const { AgeFromDateString, AgeFromDate } = require("age-calculator");
+const { AgeFromDateString } = require("age-calculator");
 const https = require("https");
-const { setTimeout } = require("timers/promises");
 
 const app = express()
 app.use(express.urlencoded({ extended: true }))
@@ -11,7 +10,6 @@ app.get("/", (req, res) => {
 })
 
 app.get("/weather", (req, res) => {
-    console.log(res.statusCode);
     res.sendFile(__dirname + "/getLocation.html")
 })
 
