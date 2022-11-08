@@ -8,6 +8,11 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html")
 })
 
+app.get("/weather", (req, res) => {
+    const apiKey = "293f292922f11a4efffd648aee55d7af"
+
+})
+
 app.post("/", (req, res) => {
     let dob = req.body.dob;
     let ageFromString = new AgeFromDateString(dob).age
