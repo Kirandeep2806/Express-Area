@@ -15,13 +15,25 @@ app.get("/weather", (req, res) => {
 
 app.post("/weather", (req, res) => {
     const apiKey = "293f292922f11a4efffd648aee55d7af"
+
     // Using the API for fetching the location coordinates
     const data = req.body;
-    const geoApiURL = `https://api.openweathermap.org/geo/1.0/direct?q=${data.location}&appid=293f292922f11a4efffd648aee55d7af`
-    https.get(geoApiURL, (res) => {
-        res.on('data', (data) => {
+    const geoApiURL = `https://api.openweathermap.org/geo/1.0/direct?q=${data.location}&appid=${apiKey}`;
+    https.get(geoApiURL, (HttpsResponse) => {
+        HttpsResponse.on('data', (data) => {
             const JSONResponse = JSON.parse(data)
-            console.log(JSONResponse);
+            let latitude = JSONResponse[0].lat
+            let longitude = JSONResponse[0].lon
+
+            // Using the API to fetch the weather
+            const language = "en";
+            const weatherApiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric&lang=${language}`;
+            https.get(weatherApiURL, (HttpsResponse) => {
+                HttpsResponse.on("data", (data) => {
+                    const JSONResponse = JSON.parse(data);
+                    console.log(JSONResponse);
+                })
+            })
         })
     })
 
